@@ -78,6 +78,8 @@ const Dashboard = () => {
     return (
         <div id="Dashboard" className="dashboard-page main-content">
             <div className="card-container grid">
+                <h1>{process.env.apiURL}</h1>
+                <h1>{process.env.REACT_APP_NOT_SECRET_CODE}</h1>
                 <h3 className="card-title">{localizationService.toLanguageString('custom.teamEfficiency')}</h3>
                 <div className="card-buttons">
                     <ButtonGroup>

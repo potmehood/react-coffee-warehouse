@@ -12,6 +12,7 @@ const items = [
     { name: 'dashboard', iconSvg: 'dashboard-icon', selected: true , route: '/' },
     { name: 'planning', iconSvg: 'planning-icon', route: '/planning' },
     { name: 'profile', iconSvg: 'profile-icon', route: '/profile' },
+    { name: 'login', iconSvg: 'profile-icon', route: '/login' },
     { separator: true },
     { name: 'info', iconSvg: 'info-icon', route: '/info' }
 ];

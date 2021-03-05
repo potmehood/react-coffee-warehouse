@@ -10,8 +10,8 @@ import { locales } from './../resources/locales';
 
 import { AppContext } from './../AppContext'
 
-import headerBg from '../assets/header-bg.png';
 import userAvatar from '../assets/user-avatar.jpg';
+import fintixLogo from '../assets/fintixlogowhite.png';
 
 export const Header = (props) => {
     const { onButtonClick, page } = props;
@@ -39,14 +39,17 @@ export const Header = (props) => {
     );
 
     return (
-        <header className="header" style={{ backgroundImage: `url(${headerBg})` }}>
+        <header className="header" style={{ backgroundColor: '#191c24' }}>
             <div className="nav-container">
                 <div className="menu-button">
                     <span className={'k-icon hamburger-icon'} onClick={onButtonClick}/>
                 </div>
 
                 <div className="title">
-                    <h1>{localizationService.toLanguageString('custom.warehouse')}</h1>
+                    {/* <h1>{localizationService.toLanguageString('custom.warehouse')}</h1> */}
+                    <span>
+                        <img src={fintixLogo} alt="fintix logo" height="28px"></img>
+                    </span>
                     <span className="vl"></span>
                     <h2>{page}</h2>
                 </div>

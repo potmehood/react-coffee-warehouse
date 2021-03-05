@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useState } from "react";
+
 
 import './App.scss';
+import './styles/global.css';
 
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard.jsx';
 import Planning from './pages/Planning.jsx';
 import Profile from './pages/Profile.jsx';
+import Signup from './pages/Signup.jsx';
+import Login from './pages/Login.jsx';
 import Info from './pages/Info.jsx';
 import DrawerRouterContainer from './components/DrawerRouterContainer.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
+import { AuthContext } from "./api/Auth.jsx";
+
 import { AppContext } from './AppContext';
 import { countries } from './resources/countries';
 import { IntlProvider, load, LocalizationProvider, loadMessages } from '@progress/kendo-react-intl';
+import { AppBar, AppBarSection, AppBarSpacer } from '@progress/kendo-react-layout';
 
 import likelySubtags from 'cldr-core/supplemental/likelySubtags.json';
 import currencyData from 'cldr-core/supplemental/currencyData.json';
@@ -81,26 +89,47 @@ const App = () => {
         },
         [contextState, setContextState]
     );
-    return (
-        <div className="App">
-            <LocalizationProvider language={contextState.localeId}>
-                <IntlProvider locale={contextState.localeId}>
-                    <AppContext.Provider value={{...contextState, onLanguageChange, onProfileChange}}>
-                        <HashRouter>
-                            <DrawerRouterContainer>
-                                <Switch>
-                                    <Route exact={true} path="/" component={Dashboard} />
-                                    <Route exact={true} path="/planning" component={Planning} />
-                                    <Route exact={true} path="/profile" component={Profile} />
-                                    <Route exact={true} path="/info" component={Info} />
-                                </Switch>
-                            </DrawerRouterContainer>
-                        </HashRouter>
-                    </AppContext.Provider>
-                </IntlProvider>
-            </LocalizationProvider>
-        </div>
-    );
+
+    const [authTokens, setAuthTokens] = useState();
+  
+    const setTokens = (data) => {
+      localStorage.setItem("tokens", JSON.stringify(data));
+      setAuthTokens(data);
+    }
+
+    if(authTokens) {
+        return (
+            <div className="App">
+                <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+                    <LocalizationProvider language={contextState.localeId}>
+                        <IntlProvider locale={contextState.localeId}>
+                            <AppContext.Provider value={{...contextState, onLanguageChange, onProfileChange}}>
+                                <HashRouter>
+                                    <DrawerRouterContainer>
+                                        <Switch>
+                                            <PrivateRoute exact={true} path="/" component={Dashboard} />
+                                            <Route exact={true} path="/planning" component={Planning} />
+                                            <Route exact={true} path="/profile" component={Profile} />
+                                            <Route exact={true} path="/info" component={Info} />
+                                            <Route path="/login" component={Login} />
+                                            <Route path="/signup" component={Signup} />
+                                        </Switch>
+                                    </DrawerRouterContainer>
+                                </HashRouter>
+                            </AppContext.Provider>
+                        </IntlProvider>
+                    </LocalizationProvider>
+                </AuthContext.Provider>
+            </div>
+        );
+    } else {
+        return (
+            <div className="App">
+            
+            </div>
+        );
+    }
+    
 }
 
 export default App;

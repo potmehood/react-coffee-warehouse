@@ -1,8 +1,8 @@
 {
-  "name": "coffee-warehouse",
+  "name": "fintix",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://telerik.github.io/react-coffee-warehouse",
+  "homepage": "https://www.fintix.com",
   "dependencies": {
     "@progress/kendo-data-query": "^1.5.3",
     "@progress/kendo-date-math": "^1.5.0",
